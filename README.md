@@ -1,6 +1,8 @@
-# Healthcare Compliance MCP Server
+# Healthcare & HIPAA Compliance MCP Server
 
 > **[View on Apify](https://apify.com)** | **[Use on Apify Store](https://apify.com)**
+
+AI agents for healthcare compliance — FDA regulatory data for medical device due diligence, adverse event monitoring, and HIPAA compliance workflows.
 
 ---
 
@@ -12,7 +14,7 @@ Add to your MCP client:
 {
   "mcpServers": {
     "healthcare-compliance-mcp": {
-      "url": "https://healthcare-compliance-mcp.apify.actor/mcp"
+      "url": "https://red-cars--healthcare-compliance-mcp.apify.actor/mcp"
     }
   }
 }
@@ -35,9 +37,9 @@ AI agents can now search medical device compliance data, screen devices for FDA 
 
 ## Why use Healthcare Compliance MCP?
 
-**The problem:** Medical device compliance research requires searching multiple FDA databases, clinical trial registries, and enforcement databases — then synthesizing findings into actionable intelligence. This takes hours of manual research.
+**The problem:** Medical device compliance research — FDA approvals, adverse events, recalls, clinical trials — requires searching multiple government databases and synthesizing findings into actionable intelligence. For HIPAA compliance officers and healthcare AI agents, this data is essential for vendor risk assessments, device vetting, and regulatory due diligence. Manual research takes hours across disconnected FDA and ClinicalTrials.gov systems.
 
-**The solution:** AI agents use Healthcare Compliance MCP to get instant, structured compliance intelligence on any medical device or manufacturer.
+**The solution:** AI agents use Healthcare Compliance MCP to get instant, structured compliance intelligence on any medical device or manufacturer — the FDA data layer for HIPAA compliance workflows.
 
 ### Key benefits:
 
@@ -102,10 +104,10 @@ Returns: quality_score, adverse_event_rate, recall_count, device_categories, ver
 ```
 
 ### Regulatory Compliance Monitoring
-*Persona: Compliance officer monitoring vendor compliance*
+*Persona: HIPAA compliance officer conducting vendor risk assessments for healthcare AI*
 
 ```
-AI agent: "Generate compliance report for 'insulin pump' devices from all manufacturers"
+AI agent: "Generate compliance report for 'insulin pump' devices — needed for HIPAA security assessment"
 MCP call: generate_compliance_report({ device_name: "insulin pump", include_clinical_trials: true })
 Returns: executive_summary, sections for 510k/recalls/events/trials, data sources
 ```
@@ -135,7 +137,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 {
   "mcpServers": {
     "healthcare-compliance-mcp": {
-      "url": "https://healthcare-compliance-mcp.apify.actor/mcp"
+      "url": "https://red-cars--healthcare-compliance-mcp.apify.actor/mcp"
     }
   }
 }
@@ -147,7 +149,7 @@ Add to MCP settings:
 {
   "mcpServers": {
     "healthcare-compliance-mcp": {
-      "url": "https://healthcare-compliance-mcp.apify.actor/mcp"
+      "url": "https://red-cars--healthcare-compliance-mcp.apify.actor/mcp"
     }
   }
 }
@@ -260,7 +262,7 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 ### cURL
 
 ```bash
-curl -X POST "https://healthcare-compliance-mcp.apify.actor/mcp" \
+curl -X POST "https://red-cars--healthcare-compliance-mcp.apify.actor/mcp" \
   -H "Authorization: Bearer YOUR_APIFY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -272,7 +274,7 @@ curl -X POST "https://healthcare-compliance-mcp.apify.actor/mcp" \
 ### Node.js
 
 ```javascript
-const response = await fetch('https://healthcare-compliance-mcp.apify.actor/mcp', {
+const response = await fetch('https://red-cars--healthcare-compliance-mcp.apify.actor/mcp', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_APIFY_TOKEN',
@@ -389,15 +391,19 @@ All results returned as structured JSON with compliance scores, risk levels, sig
 
 6. **Check 510(k) status first** — For new devices, verify 510(k) clearance before deeper compliance research
 
+7. **HIPAA compliance starts with FDA data** — Device approval status, recall history, and adverse event rates are foundational inputs for HIPAA security risk assessments
+
 ---
 
 ## Combine with other Apify actors
 
-**For comprehensive healthcare AI workflows:**
+**For comprehensive healthcare AI and HIPAA compliance workflows:**
 
 - **Clinical Research MCP** — Find papers, grants, and institutional research profiles
 - **Company Intelligence MCP** — Enrich company data with SEC filings, news, and organizational data
 - **Lead Enrichment MCP** — Build healthcare professional contact lists for B2B sales
+
+**HIPAA compliance note:** This MCP provides FDA regulatory data (device approvals, adverse events, recalls). HIPAA compliance additionally requires assessing how organizations handle PHI — use this data as one input into broader HIPAA security risk assessments.
 
 ---
 
