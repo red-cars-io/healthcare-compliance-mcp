@@ -603,30 +603,70 @@ if (isStandby) {
             req.on('end', async () => {
                 try {
                     const jsonBody = JSON.parse(body);
+                    const id = jsonBody.id ?? null;
 
-                    // Support both direct {tool, params} and JSON-RPC 2.0 {method, params}
-                    let tool, params;
-                    if (jsonBody.method && jsonBody.method.startsWith('tools/')) {
-                        // JSON-RPC 2.0 format
-                        const toolName = jsonBody.method.replace('tools/', '');
-                        params = jsonBody.params || {};
-                        tool = toolName;
-                    } else {
-                        // Direct format: {tool: "...", params: {...}}
-                        tool = jsonBody.tool;
-                        params = jsonBody.params || {};
+                    const reply = (result) => {
+                        const resp = id !== null
+                            ? { jsonrpc: '2.0', id, result }
+                            : result;
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify(resp));
+                    };
+
+                    const replyError = (code, message) => {
+                        const resp = id !== null
+                            ? { jsonrpc: '2.0', id, error: { code, message } }
+                            : { status: 'error', error: message };
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify(resp));
+                    };
+
+                    const method = jsonBody.method;
+
+                    // Standard MCP: initialize
+                    if (method === 'initialize') {
+                        return reply({
+                            protocolVersion: '2024-11-05',
+                            capabilities: { tools: {} },
+                            serverInfo: { name: 'healthcare-compliance-mcp', version: '1.0.0' }
+                        });
                     }
 
-                    if (tool === 'list') {
-                        // Return MCP manifest
+                    // Standard MCP: tools/list
+                    if (method === 'tools/list' || (!method && jsonBody.tool === 'list')) {
+                        return reply({ tools: MCP_MANIFEST.tools });
+                    }
+
+                    // Standard MCP: tools/call
+                    if (method === 'tools/call') {
+                        const toolName = jsonBody.params?.name;
+                        const toolArgs = jsonBody.params?.arguments || {};
+                        if (!toolName) return replyError(-32602, 'Missing params.name');
+                        const toolResult = await handleTool(toolName, toolArgs);
+                        return reply({
+                            content: [{ type: 'text', text: JSON.stringify(toolResult, null, 2) }]
+                        });
+                    }
+
+                    // Legacy: tools/{toolName} method format
+                    if (method && method.startsWith('tools/')) {
+                        const toolName = method.slice(6); // strip "tools/"
+                        const toolArgs = jsonBody.params || {};
+                        const toolResult = await handleTool(toolName, toolArgs);
+                        return reply({
+                            content: [{ type: 'text', text: JSON.stringify(toolResult, null, 2) }]
+                        });
+                    }
+
+                    // Legacy direct: {tool: "...", params: {...}}
+                    if (jsonBody.tool) {
+                        const toolResult = await handleTool(jsonBody.tool, jsonBody.params || {});
                         res.writeHead(200, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ tools: MCP_MANIFEST.tools }));
+                        res.end(JSON.stringify({ status: 'success', result: toolResult }));
                         return;
                     }
 
-                    const result = await handleTool(tool, params);
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ status: 'success', result }));
+                    replyError(-32601, `Method not found: ${method}`);
                 } catch (error) {
                     console.error('MCP error:', error.message);
                     res.writeHead(500, { 'Content-Type': 'application/json' });
