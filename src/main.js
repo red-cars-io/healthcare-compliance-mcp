@@ -518,7 +518,7 @@ async function generateComplianceReport(params = {}) {
         risk_level: complianceData.risk_level,
         executive_summary: executiveSummary,
         sections: {
-            510k_clearance: {
+            "510k_clearance": {
                 status: complianceData.last_510k_date ? "CLEARED" : "UNCLEARED",
                 clearance_count: complianceData['510k_clearances'],
                 last_clearance: complianceData.last_510k_date
