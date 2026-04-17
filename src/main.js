@@ -426,7 +426,7 @@ async function screenDeviceCompliance(params = {}) {
         signals,
         adverse_events_count: adverseEventsCount,
         recall_count: recallCount,
-        510k_clearances: clearanceCount,
+        "510k_clearances": clearanceCount,
         last_510k_date: lastClearanceDate,
         verdict: complianceScore >= 80
             ? "Device has clean regulatory history with no recalls or major adverse events"
