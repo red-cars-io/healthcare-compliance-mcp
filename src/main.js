@@ -28,6 +28,29 @@ const MCP_MANIFEST = {
                     max_results: { type: "integer", description: "Maximum results (default: 10)", default: 10 }
                 }
             },
+            output_schema: {
+                type: "object",
+                properties: {
+                    query: { type: "object", description: "The original search parameters" },
+                    total_events: { type: "integer", description: "Total matching adverse event reports in FDA database" },
+                    events: {
+                        type: "array",
+                        description: "List of adverse event reports",
+                        items: {
+                            type: "object",
+                            properties: {
+                                event_id: { type: "string", description: "Unique FDA event identifier" },
+                                device_name: { type: "string", description: "Generic device name" },
+                                manufacturer: { type: "string", description: "Device manufacturer" },
+                                product_code: { type: "string", description: "FDA product code" },
+                                date_of_event: { type: "string", description: "Date of event (YYYYMMDD)" },
+                                adverse_event_description: { type: "string", description: "Description of adverse event" }
+                            }
+                        }
+                    },
+                    source: { type: "string", description: "Data source (FDA MAUDE)" }
+                }
+            },
             price: 0.05
         },
         {
@@ -42,6 +65,30 @@ const MCP_MANIFEST = {
                     date_from: { type: "string", description: "Start date YYYYMMDD" },
                     date_to: { type: "string", description: "End date YYYYMMDD" },
                     max_results: { type: "integer", description: "Maximum results (default: 10)", default: 10 }
+                }
+            },
+            output_schema: {
+                type: "object",
+                properties: {
+                    query: { type: "object", description: "The original search parameters" },
+                    total_clearances: { type: "integer", description: "Total matching 510(k) clearances in FDA database" },
+                    clearances: {
+                        type: "array",
+                        description: "List of 510(k) premarket clearance records",
+                        items: {
+                            type: "object",
+                            properties: {
+                                k_number: { type: "string", description: "510(k) submission number" },
+                                device_name: { type: "string", description: "Device name" },
+                                applicant: { type: "string", description: "Applicant/manufacturer" },
+                                product_code: { type: "string", description: "FDA product code" },
+                                decision_date: { type: "string", description: "FDA decision date (YYYYMMDD)" },
+                                decision_code: { type: "string", description: "FDA decision code" },
+                                submission_type: { type: "string", description: "Type of submission" }
+                            }
+                        }
+                    },
+                    source: { type: "string", description: "Data source (FDA 510(k))" }
                 }
             },
             price: 0.03
@@ -60,6 +107,30 @@ const MCP_MANIFEST = {
                     max_results: { type: "integer", description: "Maximum results (default: 10)", default: 10 }
                 }
             },
+            output_schema: {
+                type: "object",
+                properties: {
+                    query: { type: "object", description: "The original search parameters" },
+                    total_recalls: { type: "integer", description: "Total matching recall records in FDA database" },
+                    recalls: {
+                        type: "array",
+                        description: "List of FDA device recall records",
+                        items: {
+                            type: "object",
+                            properties: {
+                                recall_id: { type: "string", description: "FDA recall identifier" },
+                                device_description: { type: "string", description: "Description of recalled device" },
+                                recalling_firm: { type: "string", description: "Firm initiating recall" },
+                                classification: { type: "string", description: "Recall classification (Class I, II, III)" },
+                                recall_initiation_date: { type: "string", description: "Date recall was initiated (YYYYMMDD)" },
+                                product_code: { type: "string", description: "FDA product code" },
+                                status: { type: "string", description: "Recall status" }
+                            }
+                        }
+                    },
+                    source: { type: "string", description: "Data source (FDA Enforcement)" }
+                }
+            },
             price: 0.05
         },
         {
@@ -76,6 +147,32 @@ const MCP_MANIFEST = {
                     max_results: { type: "integer", description: "Maximum results (default: 10)", default: 10 }
                 }
             },
+            output_schema: {
+                type: "object",
+                properties: {
+                    query: { type: "object", description: "The original search parameters" },
+                    total_trials: { type: "integer", description: "Number of trials returned" },
+                    trials: {
+                        type: "array",
+                        description: "List of clinical trials",
+                        items: {
+                            type: "object",
+                            properties: {
+                                nct_id: { type: "string", description: "ClinicalTrials.gov NCT ID" },
+                                title: { type: "string", description: "Brief title of the trial" },
+                                phase: { type: "string", description: "Trial phase (PHASE1, PHASE2, etc.)" },
+                                status: { type: "string", description: "Overall recruitment status" },
+                                conditions: { type: "array", items: { type: "string" }, description: "Medical conditions studied" },
+                                enrollment_count: { type: "integer", description: "Planned enrollment number" },
+                                sponsor: { type: "string", description: "Lead sponsor name" },
+                                start_date: { type: "string", description: "Trial start date" },
+                                completion_date: { type: "string", description: "Anticipated completion date" }
+                            }
+                        }
+                    },
+                    source: { type: "string", description: "Data source (ClinicalTrials.gov)" }
+                }
+            },
             price: 0.05
         },
         {
@@ -87,6 +184,52 @@ const MCP_MANIFEST = {
                     nct_id: { type: "string", description: "ClinicalTrials.gov NCT ID (e.g., 'NCT000001')", required: true }
                 },
                 required: ["nct_id"]
+            },
+            output_schema: {
+                type: "object",
+                properties: {
+                    nct_id: { type: "string", description: "ClinicalTrials.gov NCT ID" },
+                    title: { type: "string", description: "Brief title of the trial" },
+                    official_title: { type: "string", description: "Official trial title" },
+                    phase: { type: "string", description: "Trial phase" },
+                    status: { type: "string", description: "Overall recruitment status" },
+                    conditions: { type: "array", items: { type: "string" }, description: "Medical conditions" },
+                    interventions: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                type: { type: "string" },
+                                name: { type: "string" }
+                            }
+                        },
+                        description: "Intervention types and names"
+                    },
+                    design: {
+                        type: "object",
+                        description: "Trial design parameters",
+                        properties: {
+                            primary_purpose: { type: "string" },
+                            allocation: { type: "string" },
+                            intervention_model: { type: "string" },
+                            masking: { type: "string" }
+                        }
+                    },
+                    enrollment: {
+                        type: "object",
+                        properties: {
+                            count: { type: "integer" },
+                            type: { type: "string" }
+                        },
+                        description: "Enrollment info"
+                    },
+                    sponsor: { type: "string", description: "Lead sponsor name" },
+                    lead_sponsor: { type: "string", description: "Lead sponsor" },
+                    start_date: { type: "string", description: "Trial start date" },
+                    completion_date: { type: "string", description: "Anticipated completion date" },
+                    summary: { type: "string", description: "Brief summary of the trial" },
+                    source: { type: "string", description: "Data source (ClinicalTrials.gov)" }
+                }
             },
             price: 0.03
         },
@@ -101,6 +244,30 @@ const MCP_MANIFEST = {
                 },
                 required: ["device_name"]
             },
+            output_schema: {
+                type: "object",
+                properties: {
+                    device_name: { type: "string", description: "Device name queried" },
+                    manufacturer: { type: "string", description: "Manufacturer name" },
+                    compliance_score: { type: "number", description: "Composite compliance score 0-100 (higher = cleaner)" },
+                    risk_level: { type: "string", enum: ["LOW", "MEDIUM", "HIGH", "CRITICAL"], description: "Risk level based on score" },
+                    signals: {
+                        type: "object",
+                        description: "Detailed signal breakdown",
+                        properties: {
+                            adverse_event_rate: { type: "object", description: "Adverse event signal" },
+                            recall_history: { type: "object", description: "Recall history signal" },
+                            enforcement_actions: { type: "object", description: "Enforcement action signal" }
+                        }
+                    },
+                    adverse_events_count: { type: "integer", description: "Total adverse event reports found" },
+                    recall_count: { type: "integer", description: "Total recalls found" },
+                    "510k_clearances": { type: "integer", description: "Number of 510(k) clearances" },
+                    last_510k_date: { type: ["string", "null"], description: "Date of most recent 510(k) clearance" },
+                    verdict: { type: "string", description: "Human-readable compliance assessment" },
+                    source: { type: "string", description: "Data sources queried" }
+                }
+            },
             price: 0.10
         },
         {
@@ -112,6 +279,30 @@ const MCP_MANIFEST = {
                     manufacturer_name: { type: "string", description: "Manufacturer name", required: true }
                 },
                 required: ["manufacturer_name"]
+            },
+            output_schema: {
+                type: "object",
+                properties: {
+                    manufacturer_name: { type: "string", description: "Manufacturer name" },
+                    quality_score: { type: "number", description: "Quality score 0-100" },
+                    risk_level: { type: "string", enum: ["LOW", "MEDIUM", "HIGH", "CRITICAL"], description: "Risk level" },
+                    signals: {
+                        type: "object",
+                        description: "Quality signal breakdown",
+                        properties: {
+                            device_adverse_event_rate: { type: "object" },
+                            recall_rate: { type: "object" },
+                            clearance_velocity: { type: "object" },
+                            enforcement_history: { type: "object" }
+                        }
+                    },
+                    total_510k_clearances: { type: "integer", description: "Total 510(k) clearances" },
+                    total_adverse_events: { type: "integer", description: "Total adverse events" },
+                    active_recalls: { type: "integer", description: "Active recalls" },
+                    device_categories: { type: "array", items: { type: "string" }, description: "FDA product codes with 510(k) clearances" },
+                    verdict: { type: "string", description: "Human-readable quality assessment" },
+                    source: { type: "string" }
+                }
             },
             price: 0.08
         },
@@ -126,6 +317,58 @@ const MCP_MANIFEST = {
                     include_clinical_trials: { type: "boolean", description: "Include clinical trial data", default: false }
                 },
                 required: ["device_name"]
+            },
+            output_schema: {
+                type: "object",
+                properties: {
+                    device_name: { type: "string" },
+                    manufacturer: { type: "string" },
+                    report_date: { type: "string", description: "ISO date of report generation" },
+                    compliance_score: { type: "number" },
+                    risk_level: { type: "string", enum: ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+                    executive_summary: { type: "string", description: "Plain-text executive summary" },
+                    sections: {
+                        type: "object",
+                        description: "Report sections",
+                        properties: {
+                            "510k_clearance": {
+                                type: "object",
+                                properties: {
+                                    status: { type: "string" },
+                                    clearance_count: { type: "integer" },
+                                    last_clearance: { type: ["string", "null"] }
+                                }
+                            },
+                            adverse_events: {
+                                type: "object",
+                                properties: {
+                                    total_events: { type: "integer" },
+                                    rate_assessment: { type: "string" }
+                                }
+                            },
+                            recalls: {
+                                type: "object",
+                                properties: {
+                                    active_recalls: { type: "integer" },
+                                    recall_risk: { type: "string" }
+                                }
+                            },
+                            clinical_trials: {
+                                type: ["object", "null"],
+                                description: "Clinical trial data if include_clinical_trials=true"
+                            }
+                        }
+                    },
+                    sources: { type: "array", items: { type: "string" }, description: "Data sources used in report" },
+                    data: {
+                        type: "object",
+                        description: "Raw data from underlying API calls",
+                        properties: {
+                            events: { type: "object" },
+                            trials: { type: ["object", "null"] }
+                        }
+                    }
+                }
             },
             price: 0.15
         }
