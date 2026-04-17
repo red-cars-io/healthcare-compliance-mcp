@@ -1,0 +1,25 @@
+{
+  "actorSpecification": 1,
+  "name": "healthcare-compliance-mcp",
+  "title": "Healthcare Compliance MCP",
+  "description": "Medical device compliance intelligence for AI agents. Access FDA MAUDE adverse events, 510(k) clearances, device recalls, and ClinicalTrials.gov registry data for healthcare due diligence.",
+  "version": "1.0",
+  "meta": {
+    "templateId": "standby-node"
+  },
+  "input": "../input_schema.json",
+  "readme": "../README.md",
+  "categories": [
+    "BUSINESS_INTELLIGENCE",
+    "HEALTHCARE"
+  ],
+  "pricing": {
+    "model": "EVENT"
+  },
+  "defaultRunOptions": {
+    "memoryMbytes": 512,
+    "timeoutSecs": 120
+  },
+  "usesStandbyMode": true,
+  "webServerMcpPath": "/mcp"
+}

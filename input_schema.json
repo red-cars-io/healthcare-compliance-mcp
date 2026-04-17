@@ -1,0 +1,31 @@
+{
+  "title": "Healthcare Compliance MCP",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "tool": {
+      "title": "Tool Name",
+      "type": "string",
+      "description": "MCP tool to call",
+      "enum": [
+        "search_device_events",
+        "get_device_510k_clearance",
+        "get_device_recalls",
+        "search_clinical_trials",
+        "get_trial_details",
+        "screen_device_compliance",
+        "assess_manufacturer_quality",
+        "generate_compliance_report"
+      ],
+      "editor": "select",
+      "prefill": "search_device_events"
+    },
+    "params": {
+      "title": "Parameters (JSON)",
+      "type": "object",
+      "description": "Tool parameters as JSON object",
+      "editor": "json",
+      "prefill": {"device_name": "pacemaker", "max_results": 1}
+    }
+  }
+}

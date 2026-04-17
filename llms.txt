@@ -1,0 +1,43 @@
+# Healthcare Compliance MCP Server
+
+> **MCP Server for AI agents** | **Use on [Apify Store](https://apify.com)**
+
+Medical device compliance intelligence for AI agents. Access FDA MAUDE adverse events, 510(k) clearances, device recalls, and ClinicalTrials.gov registry data.
+
+## Quick Start
+
+Add to your MCP client:
+
+```json
+{
+  "mcpServers": {
+    "healthcare-compliance-mcp": {
+      "url": "https://healthcare-compliance-mcp.apify.actor/mcp"
+    }
+  }
+}
+```
+
+## Tools
+
+- search_device_events — Search FDA MAUDE database ($0.05)
+- get_device_510k_clearance — 510(k) premarket clearance ($0.03)
+- get_device_recalls — FDA device recall search ($0.05)
+- search_clinical_trials — ClinicalTrials.gov search ($0.05)
+- get_trial_details — Single trial details ($0.03)
+- screen_device_compliance — Compliance risk score ($0.10)
+- assess_manufacturer_quality — Manufacturer assessment ($0.08)
+- generate_compliance_report — Full compliance report ($0.15)
+
+## Data Sources
+
+| Source | API |
+|--------|-----|
+| FDA MAUDE | api.fda.gov/device/event.json |
+| FDA 510(k) | api.fda.gov/device/510k.json |
+| FDA Enforcement | api.fda.gov/device/enforcement.json |
+| ClinicalTrials.gov | clinicaltrials.gov/api/v2/studies |
+
+## Pricing
+
+PPE (Pay-Per-Event) — $0.03-$0.15 per tool call.
