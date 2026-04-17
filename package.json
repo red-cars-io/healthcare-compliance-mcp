@@ -1,6 +1,6 @@
 {
   "name": "healthcare-compliance-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Healthcare Compliance MCP Server for AI agents - Medical device compliance intelligence from FDA and ClinicalTrials.gov",
   "engines": {
