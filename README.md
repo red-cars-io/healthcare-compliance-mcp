@@ -74,6 +74,27 @@ All FDA and ClinicalTrials.gov sources fetched simultaneously using Promise.all(
 
 ---
 
+## How It Compares to FDA API Access
+
+| Aspect | Our MCP | Direct FDA API Access |
+|--------|---------|----------------------|
+| Price | $0.03-$0.15/call | Free (but requires approval) |
+| Setup time | 5 minutes | Days to weeks (registration, approval, documentation) |
+| API access | MCP (AI-native) | REST (multiple endpoints) |
+| Tool coverage | 8 tools (MAUDE, 510k, recalls, trials, compliance reports) | Manual multi-step queries |
+| Documentation | Structured, AI-friendly | Dense government docs |
+
+**Why choose our MCP:**
+- MCP protocol is designed for AI agent integration - call compliance tools with natural language
+- Composite tools (screen_device_compliance, assess_manufacturer_quality, generate_compliance_report) combine multiple FDA sources into one call
+- Compliance scoring already calculated - raw FDA data requires manual risk assessment
+- No FDA API approval required - works immediately
+- Parallel data fetching across all FDA sources
+
+**FDA API alternative:** https://open.fda.gov/
+
+---
+
 ## Use cases for healthcare compliance
 
 ### Medical Device Buyer Research
