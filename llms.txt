@@ -18,16 +18,49 @@ Add to your MCP client:
 }
 ```
 
+No API key required. AI agents can call tools directly.
+
 ## Tools
 
-- search_device_events — Search FDA MAUDE database ($0.05)
-- get_device_510k_clearance — 510(k) premarket clearance ($0.03)
-- get_device_recalls — FDA device recall search ($0.05)
-- search_clinical_trials — ClinicalTrials.gov search ($0.05)
-- get_trial_details — Single trial details ($0.03)
-- screen_device_compliance — Compliance risk score ($0.10)
-- assess_manufacturer_quality — Manufacturer assessment ($0.08)
-- generate_compliance_report — Full compliance report ($0.15)
+### search_device_events
+**Purpose:** Search FDA MAUDE database for adverse event reports on medical devices.
+**When to call:** Persona: HIPAA compliance officer or medical device buyer. Scenario: Checking adverse event history for device risk assessment or vendor evaluation.
+**Example AI prompt:** "Search FDA MAUDE for adverse event reports on insertable cardiac pacemakers from Medtronic in 2025."
+
+### get_device_510k_clearance
+**Purpose:** Get 510(k) premarket clearance details for FDA-approved devices.
+**When to call:** Persona: FDA consultant or medical device buyer. Scenario: Verifying if a specific device has 510(k) clearance before procurement.
+**Example AI prompt:** "Check if Boston Scientific has 510(k) clearance for coronary stent systems."
+
+### get_device_recalls
+**Purpose:** Search FDA device enforcement reports for recall notices.
+**When to call:** Persona: Healthcare procurement specialist or compliance officer. Scenario: Checking for active recalls before vendor contract renewal.
+**Example AI prompt:** "Find all FDA Class I and II recalls for insulin pump devices in the last 3 years."
+
+### search_clinical_trials
+**Purpose:** Search ClinicalTrials.gov registry for clinical trial information.
+**When to call:** Persona: Biotech investor or clinical operations analyst. Scenario: Researching clinical trial landscape for a therapeutic area.
+**Example AI prompt:** "Find all Phase 3 clinical trials for GLP-1 agonists that are currently recruiting."
+
+### get_trial_details
+**Purpose:** Get detailed information for a specific clinical trial by NCT ID.
+**When to call:** Persona: Clinical operations analyst or medical affairs team. Scenario: Getting protocol and eligibility criteria for a specific trial.
+**Example AI prompt:** "Get full details for clinical trial NCT05712345 including enrollment criteria and primary endpoints."
+
+### screen_device_compliance
+**Purpose:** Composite compliance risk score for a medical device combining adverse events, recalls, and 510(k) status.
+**When to call:** Persona: Healthcare procurement specialist or VC analyst. Scenario: Screening a medical device for compliance risk before purchase or investment.
+**Example AI prompt:** "Screen the compliance risk for Medtronic insulin pumps — check adverse events, recalls, and 510(k) status."
+
+### assess_manufacturer_quality
+**Purpose:** Multi-source quality assessment for a manufacturer across all device categories.
+**When to call:** Persona: Vendor risk manager or compliance officer. Scenario: Assessing overall quality track record of a device manufacturer.
+**Example AI prompt:** "Assess Medtronic's quality track record across all medical device categories."
+
+### generate_compliance_report
+**Purpose:** Full compliance intelligence report combining all FDA data sources.
+**When to call:** Persona: HIPAA compliance officer or regulatory affairs specialist. Scenario: Generating comprehensive report for HIPAA security risk assessment.
+**Example AI prompt:** "Generate a full compliance intelligence report for coronary stent devices including 510(k) status, recalls, and adverse events."
 
 ## Data Sources
 
@@ -40,4 +73,8 @@ Add to your MCP client:
 
 ## Pricing
 
-PPE (Pay-Per-Event) — $0.03-$0.15 per tool call.
+PPE (Pay-Per-Event) — $0.03-$0.15 per tool call. No API key required.
+
+## SEO Keywords
+
+FDA MAUDE, 510(k) clearance, medical device compliance, FDA adverse event reports, ClinicalTrials.gov, HIPAA compliance, no API key needed, AI agent, MCP server, healthcare compliance automation, medical device screening

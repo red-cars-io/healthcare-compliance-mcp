@@ -195,6 +195,12 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 | date_to | string | No | End date YYYYMMDD |
 | max_results | integer | No | Maximum results (default: 10) |
 
+**When to call:** Persona: HIPAA compliance officer or medical device buyer. Scenario: "I need to check if any adverse events were reported for pacemaker devices in the last 12 months."
+
+**Example AI prompt:** "Search FDA MAUDE for adverse event reports on insertable cardiac pacemakers from Medtronic in 2025, limit to 20 results."
+
+---
+
 ### get_device_510k_clearance
 
 | Parameter | Type | Required | Description |
@@ -205,6 +211,12 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 | date_from | string | No | Start date YYYYMMDD |
 | date_to | string | No | End date YYYYMMDD |
 | max_results | integer | No | Maximum results (default: 10) |
+
+**When to call:** Persona: FDA consultant or medical device buyer. Scenario: "Verify if a specific device has 510(k) clearance before procurement."
+
+**Example AI prompt:** "Check if Boston Scientific has 510(k) clearance for coronary stent systems, show the most recent clearances."
+
+---
 
 ### get_device_recalls
 
@@ -217,6 +229,12 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 | date_to | string | No | End date YYYYMMDD |
 | max_results | integer | No | Maximum results (default: 10) |
 
+**When to call:** Persona: Healthcare procurement specialist or compliance officer. Scenario: "Check for active Class I or II recalls on insulin pump devices before vendor contract renewal."
+
+**Example AI prompt:** "Find all FDA Class I and II recalls for insulin pump devices in the last 3 years, show the most recent first."
+
+---
+
 ### search_clinical_trials
 
 | Parameter | Type | Required | Description |
@@ -228,11 +246,23 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 | status | string | No | Trial status (RECRUITING, COMPLETED, etc.) |
 | max_results | integer | No | Maximum results (default: 10) |
 
+**When to call:** Persona: Biotech investor or clinical operations analyst. Scenario: "Research the clinical trial landscape for a new therapeutic area to assess competitive landscape."
+
+**Example AI prompt:** "Find all Phase 3 clinical trials for GLP-1 agonists that are currently recruiting, show sponsors and estimated completion dates."
+
+---
+
 ### get_trial_details
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | nct_id | string | Yes | ClinicalTrials.gov NCT ID (e.g., 'NCT000001') |
+
+**When to call:** Persona: Clinical operations analyst or medical affairs team. Scenario: "Get detailed protocol and eligibility criteria for a specific trial identified in landscape research."
+
+**Example AI prompt:** "Get full details for clinical trial NCT05712345 including enrollment criteria, primary endpoints, and investigator information."
+
+---
 
 ### screen_device_compliance
 
@@ -241,11 +271,23 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 | device_name | string | Yes | Device name |
 | manufacturer | string | No | Manufacturer name |
 
+**When to call:** Persona: Healthcare procurement specialist or VC analyst doing due diligence. Scenario: "Screen a medical device for compliance risk before a purchase decision or investment."
+
+**Example AI prompt:** "Screen the compliance risk for Medtronic insulin pumps — check adverse events, recalls, and 510(k) status."
+
+---
+
 ### assess_manufacturer_quality
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | manufacturer_name | string | Yes | Manufacturer name |
+
+**When to call:** Persona: Vendor risk manager or compliance officer. Scenario: "Assess overall quality track record of a device manufacturer across all their product lines."
+
+**Example AI prompt:** "Assess Medtronic's quality track record across all medical device categories — show adverse event rates, recall history, and enforcement actions."
+
+---
 
 ### generate_compliance_report
 
@@ -254,6 +296,10 @@ The MCP returns structured JSON with compliance scores, risk levels, and source 
 | device_name | string | Yes | Device name |
 | manufacturer | string | No | Manufacturer name |
 | include_clinical_trials | boolean | No | Include clinical trial data (default: false) |
+
+**When to call:** Persona: HIPAA compliance officer or regulatory affairs specialist. Scenario: "Generate a comprehensive compliance report for HIPAA security risk assessment — requires full FDA regulatory intelligence."
+
+**Example AI prompt:** "Generate a full compliance intelligence report for coronary stent devices including 510(k) status, recalls, adverse events, and any relevant clinical trials."
 
 ---
 
@@ -399,13 +445,16 @@ All results returned as structured JSON with compliance scores, risk levels, sig
 
 **For comprehensive healthcare AI and HIPAA compliance workflows:**
 
-- **Clinical Research MCP** — Find papers, grants, and institutional research profiles
-- **Company Intelligence MCP** — Enrich company data with SEC filings, news, and organizational data
-- **Lead Enrichment MCP** — Build healthcare professional contact lists for B2B sales
+- **academic-research-mcp** — Find papers, grants, and institutional research for medical device contexts
+- **patent-search-mcp** — Find patent history for medical devices (prior art, blocking patents, FDA device patents)
 
-**HIPAA compliance note:** This MCP provides FDA regulatory data (device approvals, adverse events, recalls). HIPAA compliance additionally requires assessing how organizations handle PHI — use this data as one input into broader HIPAA security risk assessments.
+**HIPAA compliance note:** This MCP provides FDA regulatory data (device approvals, adverse events, recalls). HIPAA compliance additionally requires assessing how organizations handle PHI — use this data as one input into broader HIPAA security risk assessments. No API key required — AI agents can call these tools directly.
 
 ---
+
+## SEO Keywords
+
+FDA MAUDE, 510(k) clearance, medical device compliance, FDA adverse event reports, ClinicalTrials.gov, HIPAA compliance, medical device due diligence, FDA recall search, device approval status, no API key needed, AI agent, MCP server, healthcare compliance automation, medical device screening, FDA enforcement reports.
 
 ## License
 
