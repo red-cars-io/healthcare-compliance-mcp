@@ -509,7 +509,7 @@ async function searchClinicalTrials(params = {}) {
         if (params.status) queryParts.push(`AREA[OverallStatus]${params.status}`);
 
         const query = queryParts.join('+AND+');
-        const url = `https://clinicaltrials.gov/api/v2/studies?query=${query}&maxResults=${params.max_results || 10}`;
+        const url = `https://clinicaltrials.gov/api/v2/studies?query.term=${query}&pageSize=${params.max_results || 10}`;
 
         const resp = await fetch(url);
         const data = await resp.json();
@@ -792,6 +792,21 @@ async function generateComplianceReport(params = {}) {
 // ============================================
 
 async function handleTool(toolName, params = {}) {
+    // Tool name aliases for backward compatibility
+    const aliases = {
+        "search_fda_approvals": "get_device_510k_clearance",
+        "search_maude_reports": "search_device_events",
+        "search_510k": "get_device_510k_clearance",
+        "search_adverse_events": "search_device_events",
+        "get_clinical_trials": "search_clinical_trials",
+        "find_clinical_trials": "search_clinical_trials",
+        "device_recalls": "get_device_recalls",
+        "find_recalls": "get_device_recalls",
+    };
+
+    // Resolve alias to canonical name
+    const canonicalName = aliases[toolName] || toolName;
+
     const handlers = {
         "search_device_events": async () => searchDeviceEvents(params),
         "get_device_510k_clearance": async () => getDevice510kClearance(params),
@@ -803,13 +818,13 @@ async function handleTool(toolName, params = {}) {
         "generate_compliance_report": async () => generateComplianceReport(params)
     };
 
-    const handler = handlers[toolName];
+    const handler = handlers[canonicalName];
     if (handler) {
         const result = await handler();
-        const price = TOOL_PRICES[toolName];
+        const price = TOOL_PRICES[canonicalName];
         if (price) {
             try {
-                await Actor.charge(price, { eventName: toolName });
+                await Actor.charge(price, { eventName: canonicalName });
             } catch (e) {
                 console.error("Charge failed:", e.message);
             }
