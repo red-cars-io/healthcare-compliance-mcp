@@ -1,0 +1,18 @@
+{
+  "query": {
+    "device_name": "pacemaker",
+    "max_results": 1
+  },
+  "total_events": 686065,
+  "events": [
+    {
+      "event_id": "",
+      "device_name": "",
+      "manufacturer": "",
+      "product_code": "",
+      "date_of_event": "20200407",
+      "adverse_event_description": ""
+    }
+  ],
+  "source": "FDA MAUDE"
+}
